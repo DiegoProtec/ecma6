@@ -7,25 +7,15 @@ class NegociacaoController {
         this._quantidade = $('#quantidade');
         this._valor = $('#valor');
 
-        let self = this;
-        this._negociacoes = new Proxy(new Negociacoes(), {
-            get(target, prop, receiver) {
-                if(['adiciona','limpa'].includes(prop) && typeof(target[prop]) == typeof(Function)) {
-                    return function() {
-                        console.log(`"${prop}" -> interceptada.`);
-                        Reflect.apply(target[prop], target, arguments);
-                        self._negociacoesView.update(target);
-                    }
-                }
-                return Reflect.get(target, prop, receiver);
-            }
-        });
-            
-        this._negociacoesView = new NegociacoesView($('#tableNegociacoes'));
-        this._negociacoesView.update(this._negociacoes);
-        this._mensagem = new Mensagem();
-        this._mensagemView = new MensagemView($('#mensagem'));
-        this._mensagemView.update(this._mensagem);
+        this._negociacoes = new Bind(
+            new Negociacoes(), 
+            new NegociacoesView($('#tableNegociacoes')), 
+            'adiciona','limpa');
+
+        this._negociacoes = new Bind(
+            new Mensagem(), 
+            new MensagemView($('#mensagem')), 
+            'texto');
     }
 
     adiciona(event) {
@@ -33,20 +23,28 @@ class NegociacaoController {
 
         this._negociacoes.adiciona(this._criaNegociacao());
         this._mensagem.texto = 'Negociação adicionada com sucesso.';
-        this._mensagemView.update(this._mensagem);
-
         this._limpaForm();
+    }
+
+    importa() {
+        let service = new NegociacaoService();
+        service
+        .obterNegociacoes()
+        .then(negociacoes => negociacoes.forEach(negociacao => {
+            this._negociacoes.adiciona(negociacao);
+            this._mensagem.texto = 'Negociações do período importadas'   
+        }))
+        .catch(erro => this._mensagem.texto = erro);
     }
 
     apaga(event){
         this._negociacoes.limpa();
         this._mensagem.texto = 'Negociações removidas com sucesso!';
-        this._mensagemView.update(this._mensagem);
     }
 
     _criaNegociacao() {
         return new Negociacao(
-            this._data.value,
+            DateHelper.paraData(this._data.value),
             this._quantidade.value,
             this._valor.value);
     }

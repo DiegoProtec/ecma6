@@ -1,14 +1,14 @@
 class Negociacao {
 
     constructor(data, quantidade, valor) {
-        this._data = new Date(DateHelper.paraData(data).getTime());
+        this._data = data;
         this._quantidade = quantidade;
         this._valor = valor;
         Object.freeze(this);
     }
 
     get data() {
-        return DateHelper.paraTexto(new Date(this._data.getTime()));
+        return DateHelper.paraTexto(this._data);
     }
 
     get quantidade() {
