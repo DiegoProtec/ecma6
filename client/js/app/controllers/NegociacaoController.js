@@ -12,7 +12,7 @@ class NegociacaoController {
             new NegociacoesView($('#tableNegociacoes')), 
             'adiciona','limpa');
 
-        this._negociacoes = new Bind(
+        this._mensagem = new Bind(
             new Mensagem(), 
             new MensagemView($('#mensagem')), 
             'texto');
