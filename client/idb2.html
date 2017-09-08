@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Teste IDB2</title>
+
+</head>
+
+<body>
+    <script src="js/app/models/Negociacao.js"></script>
+    <script>
+        var connection;
+        var request = window.indexedDB.open('testeIDB2', 1);
+        request.onupgradeneeded = e => {
+
+            console.log('onupgradeneeded cria ou altera um banco');
+            let connection = e.target.result;
+            if (connection.objectStoreNames.contains('negociacoes')) {
+                connection.deleteObjectStore('negociacoes');
+            }
+            connection.createObjectStore('negociacoes', { autoIncrement: true });
+        };
+
+        request.onsuccess = e => {
+
+            console.log('onsuccess retorna conexão aberta');
+            connection = e.target.result;
+        };
+
+        request.onerror = e => {
+
+            console.log(e.target.error.name);
+        };
+
+        function adiciona() {
+
+            let transaction = connection.transaction(['negociacoes'], 'readwrite');
+            let store = transaction.objectStore('negociacoes');
+            let negociacao = new Negociacao(new Date(), 1, 100);
+            let request = store.add(negociacao);
+            request.onsuccess = e => {
+
+                console.log('Negociação adicionada com sucesso.');
+            }
+
+            request.onerror = e => {
+
+                console.log('Não foi possível adicionar negociação.');
+            }
+        }
+
+        function lista() {
+
+            let transaction = connection.transaction(['negociacoes'], 'readwrite');
+            let store = transaction.objectStore('negociacoes');
+            let cursor = store.openCursor();
+            let negociacoes = [];
+
+            cursor.onsuccess = e => {
+
+                let atual = e.target.result;
+                if (atual) {
+
+                    let negociacao = atual.value;
+                    negociacoes.push(new Negociacao(negociacao._data, negociacao._quantidade, negociacao._valor));
+                    atual.continue();
+                } else {
+
+                    console.log(negociacoes);
+                }
+            };
+
+            cursor.onerror = e => {
+
+                console.log(e.target.error.name);
+            };
+        }
+    </script>
+</body>
+
+</html>
