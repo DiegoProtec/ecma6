@@ -17,17 +17,10 @@ System.register([], function (_export, _context) {
         }
     }
 
-<<<<<<< HEAD
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
             throw new TypeError("Cannot call a class as a function");
         }
-=======
-    static paraData(texto) {
-        if (!/\d{4}-\d{2}-\d{2}/.test(texto))
-            throw new Error('Deve estar no formato aaaa-mm-dd');
-        return new Date(...texto.split('-').map((val, i) => val - i % 2));
->>>>>>> f25d0a6198cf07e8f1356ebba7b65087836e043c
     }
 
     return {

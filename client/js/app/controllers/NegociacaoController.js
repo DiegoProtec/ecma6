@@ -5,22 +5,10 @@ System.register(['../models/Mensagem', '../models/Negociacao', '../models/Negoci
 
     var Mensagem, Negociacao, Negociacoes, MensagemView, NegociacoesView, NegociacaoService, DateHelper, Bind, _createClass, NegociacaoController, negociacaoController;
 
-<<<<<<< HEAD
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
             throw new TypeError("Cannot call a class as a function");
         }
-=======
-        this._negociacoes = new Bind(
-            new Negociacoes(), 
-            new NegociacoesView($('#tableNegociacoes')), 
-            'adiciona','limpa');
-
-        this._mensagem = new Bind(
-            new Mensagem(), 
-            new MensagemView($('#mensagem')), 
-            'texto');
->>>>>>> f25d0a6198cf07e8f1356ebba7b65087836e043c
     }
 
     return {

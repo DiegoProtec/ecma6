@@ -3,13 +3,7 @@
 System.register([], function (_export, _context) {
     "use strict";
 
-<<<<<<< HEAD
     var _createClass, Negociacao;
-=======
-    get data() {
-        return new Date(this._data.getTime());
-    }
->>>>>>> f25d0a6198cf07e8f1356ebba7b65087836e043c
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {

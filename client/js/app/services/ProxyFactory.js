@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use strict";
 
 System.register([], function (_export, _context) {
@@ -30,20 +29,6 @@ System.register([], function (_export, _context) {
                         if ("value" in descriptor) descriptor.writable = true;
                         Object.defineProperty(target, descriptor.key, descriptor);
                     }
-=======
-class ProxyFactory {
-
-	static create(objeto, props, acao) {
-        
-		return new Proxy(objeto, {
-            get(target, prop, receiver) {
-                if(props.includes(prop) && ProxyFactory._isFunction(target[prop])) {
-                    console.log(`"${prop}" -> interceptada.`);
-                    return function() {
-                        Reflect.apply(target[prop], target, arguments);
-                        return acao(target);
-                    };
->>>>>>> f25d0a6198cf07e8f1356ebba7b65087836e043c
                 }
 
                 return function (Constructor, protoProps, staticProps) {
