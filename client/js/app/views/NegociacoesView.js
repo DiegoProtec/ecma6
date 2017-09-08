@@ -18,6 +18,7 @@ System.register(['./View', '../helpers/DateHelper', '../controllers/NegociacaoCo
 
         return call && (typeof call === "object" || typeof call === "function") ? call : self;
     }
+<<<<<<< HEAD
 
     function _inherits(subClass, superClass) {
         if (typeof superClass !== "function" && superClass !== null) {
@@ -33,6 +34,36 @@ System.register(['./View', '../helpers/DateHelper', '../controllers/NegociacaoCo
             }
         });
         if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+=======
+    
+    template(model) {
+        return `
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>DATA</th>
+                        <th>QUANTIDADE</th>
+                        <th>VALOR</th>
+                        <th>VOLUME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${model._negociacoes.map(i => `
+                                <tr>
+                                    <td>${DateHelper.paraTexto(i.data)}</td>
+                                    <td>${i.quantidade}</td>
+                                    <td>${i.valor}</td>
+                                    <td>${i.volume}</td>
+                                </tr>
+                    `).join('')}
+                </tbody>
+                <tfoot>
+                    <td colspan="3"></td>
+                    <td>${model._total}</td>
+                </tfoot>
+            </table>
+        `;
+>>>>>>> f25d0a6198cf07e8f1356ebba7b65087836e043c
     }
 
     return {

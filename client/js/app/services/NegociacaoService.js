@@ -3,6 +3,7 @@
 System.register(['./HttpService', './ConnectionFactory', '../models/Negociacao', '../daos/NegociacaoDao'], function (_export, _context) {
 	"use strict";
 
+<<<<<<< HEAD
 	var HttpService, ConnectionFactory, Negociacao, NegociacaoDao, _createClass, NegociacaoService;
 
 	function _classCallCheck(instance, Constructor) {
@@ -132,6 +133,46 @@ System.register(['./HttpService', './ConnectionFactory', '../models/Negociacao',
 					key: 'negociacoesSemanaAnterior',
 					value: function negociacoesSemanaAnterior() {
 						var _this2 = this;
+=======
+	negociacoesSemana() {
+
+		return new Promise((resolve, reject) => {
+			this._http
+			.get('negociacoes/semana')
+			.then(negociacoes => resolve(negociacoes
+				.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))))
+			.catch(erro => {
+				reject('Não foi possível importar negociações da semana.');
+			});
+		});		
+	}
+
+	negociacoesSemanaAnterior() {
+
+		return new Promise((resolve, reject) => {
+			this._http
+			.get('negociacoes/anterior')
+			.then(negociacoes => resolve(negociacoes
+				.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))))
+			.catch(erro => {
+				reject('Não foi possível importar negociações da semana anterior.');
+			});
+		});
+	}
+
+	negociacoesSemanaRetrasada() {
+
+		return new Promise((resolve, reject) => {
+			this._http
+			.get('negociacoes/retrasada')
+			.then(negociacoes => resolve(negociacoes
+				.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))))
+			.catch(erro => {
+				reject('Não foi possível importar negociações da semana retrasada.');
+			});
+		});
+	}
+>>>>>>> f25d0a6198cf07e8f1356ebba7b65087836e043c
 
 						return new Promise(function (resolve, reject) {
 							_this2._http.get('negociacoes/anterior').then(function (negociacoes) {
@@ -165,7 +206,15 @@ System.register(['./HttpService', './ConnectionFactory', '../models/Negociacao',
 					value: function obterNegociacoes() {
 						var _this4 = this;
 
+<<<<<<< HEAD
 						return new Promise(function (resolve, reject) {
+=======
+            Promise.all([
+                this.negociacoesSemana(),
+                this.negociacoesSemanaAnterior(),
+                this.negociacoesSemanaRetrasada()
+            ]).then(periodos => {
+>>>>>>> f25d0a6198cf07e8f1356ebba7b65087836e043c
 
 							Promise.all([_this4.negociacoesSemana(), _this4.negociacoesSemanaAnterior(), _this4.negociacoesSemanaRetrasada()]).then(function (periodos) {
 								var negociacoes = periodos.reduce(function (dados, periodo) {
